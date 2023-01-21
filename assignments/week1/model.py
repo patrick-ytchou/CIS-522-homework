@@ -98,7 +98,6 @@ class GradientDescentLinearRegression(LinearRegression):
             pred (np.ndarray): the prediction based on the input data and the fitted regression model.
 
         """
-
         if self.has_fitted == False:
             raise Exception("The linear regression model hasn't been fitted yet.")
 
