@@ -24,12 +24,12 @@ class LinearRegression:
         """
         self.has_fitted = True
 
-        ## closed-form solution
+        ## get the bias term
         X = np.append(X, np.ones((X.shape[0], 1)), axis=1)
-        xTx = np.dot(X.T, X)
-        inverse_xTx = np.linalg.inv(xTx)
-        xTy = np.dot(X.T, y)
-        self.params = np.dot(inverse_xTx, xTy)
+
+        ## closed-form solution
+        inv_xTx = np.linalg.inv(np.dot(X.T, X))
+        self.params = np.dot(inv_xTx, np.dot(X.T, y))
 
         ## store results
         self.b = self.params[-1]
