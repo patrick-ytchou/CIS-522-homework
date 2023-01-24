@@ -24,14 +24,14 @@ class LinearRegression:
         """
         self.has_fitted = True
 
-        ## get the bias term
+        # get the bias term
         X = np.append(X, np.ones((X.shape[0], 1)), axis=1)
 
-        ## closed-form solution
+        # closed-form solution
         inv_xTx = np.linalg.inv(np.dot(X.T, X))
         self.params = np.dot(inv_xTx, np.dot(X.T, y))
 
-        ## store results
+        # store results
         self.b = self.params[-1]
         self.w = self.params[:-1]
 
@@ -70,7 +70,7 @@ class GradientDescentLinearRegression(LinearRegression):
 
         self.has_fitted = True
 
-        ## initiatize weights and bias for graidient descent
+        # initiatize weights and bias for graidient descent
         self.w = np.random.rand(len(y))
         self.b = 0
 
@@ -78,12 +78,12 @@ class GradientDescentLinearRegression(LinearRegression):
             w_grad = 0.0
             b_grad = 0.0
 
-            ## update gradient based on gradient descent
+            # update gradient based on gradient descent
             for n in range(len(X)):
                 w_grad = w_grad - 2.0 * (y[n] - self.b - self.w * X[n]) * X[n]
                 b_grad = b_grad - 2.0 * (y[n] - self.b - self.w * X[n]) * 1.0
 
-            ## update parameters based on gradient and learning rate
+            # update parameters based on gradient and learning rate
             self.w = self.w - lr * w_grad
             self.b = self.b - lr * b_grad
 
