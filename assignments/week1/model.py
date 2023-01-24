@@ -44,7 +44,7 @@ class LinearRegression:
         Returns:
             pred (np.ndarray): the prediction based on the input data and the fitted regression model.
         """
-        if self.has_fitted == False:
+        if not self.has_fitted:
             raise Exception("The linear regression model hasn't been fitted yet.")
 
         pred = self.b + np.dot(X, self.w)
@@ -98,7 +98,7 @@ class GradientDescentLinearRegression(LinearRegression):
             pred (np.ndarray): the prediction based on the input data and the fitted regression model.
 
         """
-        if self.has_fitted == False:
+        if not self.has_fitted:
             raise Exception("The linear regression model hasn't been fitted yet.")
 
         pred = self.b + np.dot(X, self.w)
