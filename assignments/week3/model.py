@@ -39,7 +39,7 @@ class MLP(torch.nn.Module):
         self.layers += [nn.Linear(self.input_size, self.hidden_size)]
         for i in range(self.hidden_count - 1):
             self.layers += [nn.Linear(self.hidden_size, self.hidden_size)]
-            self.layers += [nn.Dropout(0.2)]
+            self.layers += [nn.Dropout(0.1)]
 
         self.out = nn.Linear(self.hidden_size, self.num_classes)
 
