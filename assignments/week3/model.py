@@ -35,9 +35,11 @@ class MLP(torch.nn.Module):
         self.initializer = initializer
 
         self.layers = nn.ModuleList()
+
         self.layers += [nn.Linear(self.input_size, self.hidden_size)]
-        for i in range(hidden_count - 1):
+        for i in range(self.hidden_count - 1):
             self.layers += [nn.Linear(self.hidden_size, self.hidden_size)]
+
         self.out = nn.Linear(self.hidden_size, self.num_classes)
 
     def forward(self, x: torch.tensor) -> torch.tensor:
@@ -54,7 +56,8 @@ class MLP(torch.nn.Module):
         x = x.reshape(x.shape[0], -1)
 
         # train the model
-        x = self.actv(self.fc1(1))
-        output = self.fc2(x)
+        for layer in self.layers:
+            x = self.actv(layer(x))
+        output = self.out(x)
 
         return output
