@@ -27,6 +27,7 @@ class MLP(torch.nn.Module):
             initializer: The initializer to use for the weights.
         """
         super(MLP, self).__init__()
+
         self.input_size = input_size
         self.hidden_size = hidden_size
         self.num_classes = num_classes
@@ -36,23 +37,40 @@ class MLP(torch.nn.Module):
 
         # Define dropout and batchnorm layer
         self.dropout = nn.Dropout(0.2)
-        self.batchnorm = nn.BatchNorm1d(hidden_size)
 
         # Define feedforward neural network
         self.layers = nn.ModuleList()
 
-        self.layers += [nn.Linear(self.input_size, self.hidden_size)]
-        for i in range(self.hidden_count - 1):
-            self.layers += [nn.Linear(self.hidden_size, self.hidden_size)]
-        self.out = nn.Linear(self.hidden_size, self.num_classes)
+        # Define number of neurons in each layer while maintaining the API
+        self.n_neurons = [input_size] + [
+            hidden_size // 2**i for i in range(hidden_count)
+        ]
 
-        # Initialize weights
-        for layer in self.layers:
-            self.initializer(layer.weight)
-            layer.bias.data.uniform_
+        # Order for layers: Linear -> BatchNorm -> Activation -> Dropout
+        for i in range(len(self.n_neurons)):
+            # Define Feedforward neural network and init weights and bias
+            self.layers += [nn.Linear(self.n_neurons[i], self.n_neurons[i + 1])]
+            self.initializer(self.layers[-1].weight)
+            self.layers[-1].bias.data.uniform_
 
+            # Define batchnorm layer
+            self.layers += [nn.BatchNorm1d(self.n_neurons[i + 1])]
+
+            self.layers += [self.actv]
+
+            # Define dropout layer only at every two hidden layers
+            if i % 2 == 0:
+                self.layers += [self.dropout]
+
+        # Define output layer and initialize weight and bias
+        self.out = nn.Linear(self.n_neurons[-1], self.num_classes)
         self.initializer(self.out.weight)
         self.out.bias.data.uniform_
+
+        # # Initialize weights
+        # for layer in self.layers:
+        #     self.initializer(layer.weight)
+        #     layer.bias.data.uniform_
 
     def forward(self, x: torch.tensor) -> torch.tensor:
         """
@@ -64,13 +82,20 @@ class MLP(torch.nn.Module):
         Returns:
             The output of the network.
         """
-        # flattening
-        x = x.reshape(x.shape[0], -1)
+        # # Flattening
+        # x = x.reshape(x.shape[0], -1)
 
-        # train the model. Note that there can be multplie "layer" in each "layers"
+        # Train the model
         for layer in self.layers:
-            x = self.actv(self.batchnorm(layer(x)))
-            x = self.dropout(x)
+            x = layer(x)
+
+        # for enum, layer in enumerate(self.layers):
+        #     x = self.actv(self.batchnorm(layer(x)))
+
+        #     # Pass in dropout only at every two hidden layers
+        #     if enum % 2 == 0:
+        #         x = self.dropout(x)
+
         output = self.out(x)
 
         return output
