@@ -45,8 +45,8 @@ class MLP(torch.nn.Module):
         # From Ed, we can change number of neurons in each layer as lon as the API remains unchanged
         self.n_neurons = (
             [input_size]
-            + [hidden_size // 4**i for i in range((hidden_count + 1) // 2)]
-            + [hidden_size // 4**i for i in reversed(range(hidden_count // 2))]
+            + [hidden_size // 2**i for i in range((hidden_count + 1) // 2)]
+            + [hidden_size // 2**i for i in reversed(range(hidden_count // 2))]
         )
 
         # Define Feedforward neural network and init weights and bias
