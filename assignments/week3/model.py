@@ -36,16 +36,18 @@ class MLP(torch.nn.Module):
         self.initializer = initializer
 
         # Define dropout layer
-        self.dropout = nn.Dropout(0.15)
+        self.dropout = nn.Dropout(0.2)
 
         # Define feedforward neural network
         self.layers = nn.ModuleList()
 
-        # Define number of neurons in each layer
+        # Define number of neurons in each layer, using auto-encoder like structure
         # From Ed, we can change number of neurons in each layer as lon as the API remains unchanged
-        self.n_neurons = [input_size] + [
-            hidden_size // 2**i for i in range(self.hidden_count)
-        ]
+        self.n_neurons = (
+            [input_size]
+            + [hidden_size // 4**i for i in range((hidden_count + 1) // 2)]
+            + [hidden_size // 4**i for i in reversed(range(hidden_count // 2))]
+        )
 
         # Define Feedforward neural network and init weights and bias
         for i in range(self.hidden_count):
