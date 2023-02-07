@@ -9,7 +9,7 @@ class MLP(torch.nn.Module):
     def __init__(
         self,
         input_size: int,
-        hidden_size: int,
+        hidden_size: list,
         num_classes: int,
         hidden_count: int = 1,
         activation: Callable = torch.nn.ReLU,
@@ -20,7 +20,8 @@ class MLP(torch.nn.Module):
 
         Arguments:
             input_size: The dimension D of the input data.
-            hidden_size: The number of neurons H in the hidden layer.
+            hidden_size: The number of neurons H in the hidden layer. ## deprecated for now
+            hidden_size: List of number of neurons H in the hidden layer.
             num_classes: The number of classes C.
             hidden_count: The number of hidden layers.
             activation: The activation function to use in the hidden layer.
@@ -34,14 +35,19 @@ class MLP(torch.nn.Module):
         self.actv = activation
         self.initializer = initializer
 
+        self.dropout = nn.Dropout(0.2)
         self.layers = nn.ModuleList()
 
-        self.layers += [nn.Linear(self.input_size, self.hidden_size)]
-        for i in range(self.hidden_count - 1):
-            self.layers += [nn.Linear(self.hidden_size, self.hidden_size)]
-            self.layers += [nn.Dropout(0.1)]
+        ## Ensure length of hidden size is the number of hidden layers
+        if len(hidden_size) != hidden_count:
+            raise Exception("Number of hidden size specified is not the same as the hidden count specified.")
 
-        self.out = nn.Linear(self.hidden_size, self.num_classes)
+
+        self.layers += [nn.Linear(self.input_size, self.hidden_size[0])]
+        for i in range(self.hidden_count - 1):
+            self.layers += [nn.Linear(self.hidden_size[i], self.hidden_size[i+1])]
+
+        self.out = nn.Linear(self.hidden_size[-1], self.num_classes)
 
     def forward(self, x: torch.tensor) -> torch.tensor:
         """
@@ -56,9 +62,10 @@ class MLP(torch.nn.Module):
         # flattening
         x = x.reshape(x.shape[0], -1)
 
-        # train the model
+        # train the model. Note that there can be multplie "layer" in each "layers"
         for layer in self.layers:
             x = self.actv(layer(x))
+            x = self.dropout(x)
         output = self.out(x)
 
         return output
