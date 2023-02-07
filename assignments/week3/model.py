@@ -35,42 +35,29 @@ class MLP(torch.nn.Module):
         self.actv = activation
         self.initializer = initializer
 
-        # Define dropout and batchnorm layer
-        self.dropout = nn.Dropout(0.2)
+        # Define dropout layer
+        self.dropout = nn.Dropout(0.15)
 
         # Define feedforward neural network
         self.layers = nn.ModuleList()
 
-        # Define number of neurons in each layer while maintaining the API
+        # Define number of neurons in each layer
+        # From Ed, we can change number of neurons in each layer as lon as the API remains unchanged
         self.n_neurons = [input_size] + [
             hidden_size // 2**i for i in range(self.hidden_count)
         ]
 
-        # Order for layers: Linear -> BatchNorm -> Activation -> Dropout
+        # Define Feedforward neural network and init weights and bias
         for i in range(self.hidden_count):
             # Define Feedforward neural network and init weights and bias
             self.layers += [nn.Linear(self.n_neurons[i], self.n_neurons[i + 1])]
             self.initializer(self.layers[-1].weight)
-            self.layers[-1].bias.data.uniform_
-
-            # Define batchnorm layer
-            self.layers += [nn.BatchNorm1d(self.n_neurons[i + 1])]
-
-            self.layers += [self.actv]
-
-            # Define dropout layer only at every two hidden layers
-            if i % 2 == 0:
-                self.layers += [self.dropout]
+            self.layers[-1].bias.data.normal_
 
         # Define output layer and initialize weight and bias
         self.out = nn.Linear(self.n_neurons[-1], self.num_classes)
         self.initializer(self.out.weight)
-        self.out.bias.data.uniform_
-
-        # # Initialize weights
-        # for layer in self.layers:
-        #     self.initializer(layer.weight)
-        #     layer.bias.data.uniform_
+        self.out.bias.data.normal_
 
     def forward(self, x: torch.tensor) -> torch.tensor:
         """
@@ -82,19 +69,22 @@ class MLP(torch.nn.Module):
         Returns:
             The output of the network.
         """
-        # # Flattening
-        # x = x.reshape(x.shape[0], -1)
 
-        # Train the model
-        for layer in self.layers:
+        # Train the model.
+        # Order for layers: Linear -> BatchNorm -> Activation -> Dropout
+        for enum, layer in enumerate(self.layers):
+            # Prediction
             x = layer(x)
 
-        # for enum, layer in enumerate(self.layers):
-        #     x = self.actv(self.batchnorm(layer(x)))
+            # Batchnorm
+            x = nn.BatchNorm1d(layer.out_features)(x)
 
-        #     # Pass in dropout only at every two hidden layers
-        #     if enum % 2 == 0:
-        #         x = self.dropout(x)
+            # Activation
+            x = self.actv(x)
+
+            # Dropout every two layers
+            if enum % 2 != 0:
+                x = self.dropout(x)
 
         output = self.out(x)
 
