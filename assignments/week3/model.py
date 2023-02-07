@@ -42,7 +42,7 @@ class MLP(torch.nn.Module):
 
         # Define number of neurons in each layer while maintaining the API
         self.n_neurons = [input_size] + [
-            hidden_size // i**2 for i in range(self.hidden_count)
+            hidden_size // (i+1)**2 for i in range(self.hidden_count)
         ]
 
         # Order for layers: Linear -> BatchNorm -> Activation -> Dropout

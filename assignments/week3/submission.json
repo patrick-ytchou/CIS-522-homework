@@ -8,6 +8,7 @@
     ],
     "sources": [
         "Worksheets W3D1 + W3D2",
+        "Ed discussion thread",
         "https://pytorch.org/docs/stable/generated/torch.nn.BatchNorm1d.html",
         "https://towardsai.net/p/l/is-gelu-the-relu-successor",
         "https://pouannes.github.io/blog/initialization/",
