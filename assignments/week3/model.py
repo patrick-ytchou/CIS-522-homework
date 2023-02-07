@@ -40,12 +40,13 @@ class MLP(torch.nn.Module):
 
         ## Ensure length of hidden size is the number of hidden layers
         if len(hidden_size) != hidden_count:
-            raise Exception("Number of hidden size specified is not the same as the hidden count specified.")
-
+            raise Exception(
+                "Number of hidden size specified is not the same as the hidden count specified."
+            )
 
         self.layers += [nn.Linear(self.input_size, self.hidden_size[0])]
         for i in range(self.hidden_count - 1):
-            self.layers += [nn.Linear(self.hidden_size[i], self.hidden_size[i+1])]
+            self.layers += [nn.Linear(self.hidden_size[i], self.hidden_size[i + 1])]
 
         self.out = nn.Linear(self.hidden_size[-1], self.num_classes)
 
