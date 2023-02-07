@@ -34,14 +34,17 @@ class MLP(torch.nn.Module):
         self.actv = activation
         self.initializer = initializer
 
-        self.dropout = nn.Dropout(0.5)
+        self.dropout = nn.Dropout(0.2)
         self.layers = nn.ModuleList()
 
         self.layers += [nn.Linear(self.input_size, self.hidden_size)]
+        self.initializer(self.layers[-1].weight)
         for i in range(self.hidden_count - 1):
             self.layers += [nn.Linear(self.hidden_size, self.hidden_size)]
+            self.initializer(self.layers[-1].weight)
 
         self.out = nn.Linear(self.hidden_size, self.num_classes)
+        self.initializer(self.out.weight)
 
     def forward(self, x: torch.tensor) -> torch.tensor:
         """
@@ -58,7 +61,7 @@ class MLP(torch.nn.Module):
 
         # train the model. Note that there can be multplie "layer" in each "layers"
         for layer in self.layers:
-            x = self.actv(layer(x))
+            x = self.actv(nn.BatchNorm1d(layer(x)))
             x = self.dropout(x)
         output = self.out(x)
 

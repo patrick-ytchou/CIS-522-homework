@@ -7,6 +7,7 @@
         }
     ],
     "sources": [
-        "https://pouannes.github.io/blog/initialization/"
+        "https://pouannes.github.io/blog/initialization/",
+        "https://www.saltdatalabs.com/blog/deep-learning-101-transformer-activation-functions-explainer-relu-leaky-relu-gelu-elu-selu-softmax-and-more"
     ]
 }
