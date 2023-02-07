@@ -7,7 +7,9 @@
         }
     ],
     "sources": [
+        "https://pytorch.org/docs/stable/generated/torch.nn.BatchNorm1d.html",
         "https://pouannes.github.io/blog/initialization/",
+        "https://stackoverflow.com/questions/39691902/ordering-of-batch-normalization-and-dropout",
         "https://www.saltdatalabs.com/blog/deep-learning-101-transformer-activation-functions-explainer-relu-leaky-relu-gelu-elu-selu-softmax-and-more"
     ]
 }

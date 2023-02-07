@@ -34,17 +34,25 @@ class MLP(torch.nn.Module):
         self.actv = activation
         self.initializer = initializer
 
+        # Define dropout and batchnorm layer
         self.dropout = nn.Dropout(0.2)
+        self.batchnorm = nn.BatchNorm1d(hidden_size)
+
+        # Define feedforward neural network
         self.layers = nn.ModuleList()
 
         self.layers += [nn.Linear(self.input_size, self.hidden_size)]
-        self.initializer(self.layers[-1].weight)
         for i in range(self.hidden_count - 1):
             self.layers += [nn.Linear(self.hidden_size, self.hidden_size)]
-            self.initializer(self.layers[-1].weight)
-
         self.out = nn.Linear(self.hidden_size, self.num_classes)
+
+        # Initialize weights
+        for layer in self.layers:
+            self.initializer(layer.weight)
+            layer.bias.data.uniform_
+
         self.initializer(self.out.weight)
+        self.out.bias.data.uniform_
 
     def forward(self, x: torch.tensor) -> torch.tensor:
         """
@@ -61,7 +69,7 @@ class MLP(torch.nn.Module):
 
         # train the model. Note that there can be multplie "layer" in each "layers"
         for layer in self.layers:
-            x = self.actv(nn.BatchNorm1d(layer(x)))
+            x = self.actv(self.batchnorm(layer(x)))
             x = self.dropout(x)
         output = self.out(x)
 
