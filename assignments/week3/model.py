@@ -36,7 +36,7 @@ class MLP(torch.nn.Module):
         self.initializer = initializer
 
         # Define dropout layer
-        self.dropout = nn.Dropout(0.2)
+        self.dropout = nn.Dropout(0.1)
 
         # Define feedforward neural network
         self.layers = nn.ModuleList()
