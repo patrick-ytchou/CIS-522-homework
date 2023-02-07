@@ -52,9 +52,8 @@ class MLP(torch.nn.Module):
             self.initializer(self.layers[-1].weight)
             self.layers[-1].bias.data.uniform_
 
-            # Define batchnorm layer
+            # Add batchnorm layer and activation function
             self.layers += [nn.BatchNorm1d(self.n_neurons[i + 1])]
-
             self.layers += [self.actv]
 
             # Define dropout layer only at every two hidden layers
