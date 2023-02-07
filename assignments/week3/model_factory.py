@@ -19,7 +19,7 @@ def create_model(input_dim: int, output_dim: int) -> MLP:
         input_dim,
         512,
         output_dim,
-        5,
+        4,
         torch.nn.GELU(),
-        torch.nn.init.kaiming_normal_,
+        torch.nn.init.kaiming_uniform_,
     )

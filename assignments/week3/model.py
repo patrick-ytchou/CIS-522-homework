@@ -52,12 +52,12 @@ class MLP(torch.nn.Module):
             # Define Feedforward neural network and init weights and bias
             self.layers += [nn.Linear(self.n_neurons[i], self.n_neurons[i + 1])]
             self.initializer(self.layers[-1].weight)
-            self.layers[-1].bias.data.normal_
+            self.layers[-1].bias.data.uniform_
 
         # Define output layer and initialize weight and bias
         self.out = nn.Linear(self.n_neurons[-1], self.num_classes)
         self.initializer(self.out.weight)
-        self.out.bias.data.normal_
+        self.out.bias.data.uniform_
 
     def forward(self, x: torch.tensor) -> torch.tensor:
         """
@@ -83,7 +83,7 @@ class MLP(torch.nn.Module):
             x = self.actv(x)
 
             # Dropout every two layers
-            if enum % 2 != 0:
+            if enum % 2 == 0:
                 x = self.dropout(x)
 
         output = self.out(x)
