@@ -34,7 +34,7 @@ class MLP(torch.nn.Module):
         self.actv = activation
         self.initializer = initializer
 
-        self.dropout = nn.Dropout(0.25)
+        self.dropout = nn.Dropout(0.5)
         self.layers = nn.ModuleList()
 
         self.layers += [nn.Linear(self.input_size, self.hidden_size)]
