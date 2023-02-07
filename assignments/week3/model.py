@@ -34,9 +34,6 @@ class MLP(torch.nn.Module):
         self.actv = activation
         self.initializer = initializer
 
-        # # Define dropout and batchnorm layer
-        # self.dropout = nn.Dropout(0.05)
-
         # Define feedforward neural network
         self.layers = nn.ModuleList()
 
@@ -46,6 +43,7 @@ class MLP(torch.nn.Module):
         ]
 
         # Order for layers: Linear -> BatchNorm -> Activation -> Dropout
+        # After several tries, turns out that dropout doesn't help
         for i in range(self.hidden_count):
             # Define Feedforward neural network and init weights and bias
             self.layers += [nn.Linear(self.n_neurons[i], self.n_neurons[i + 1])]
@@ -55,10 +53,6 @@ class MLP(torch.nn.Module):
             # Add batchnorm layer and activation function
             self.layers += [nn.BatchNorm1d(self.n_neurons[i + 1])]
             self.layers += [self.actv]
-
-            # # Define dropout layer only at every two hidden layers
-            # if i % 2 == 0:
-            #     self.layers += [self.dropout]
 
         # Define output layer and initialize weight and bias
         self.out = nn.Linear(self.n_neurons[-1], self.num_classes)
