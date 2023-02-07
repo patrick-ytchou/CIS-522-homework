@@ -12,7 +12,7 @@ class MLP(torch.nn.Module):
         hidden_size: int,
         num_classes: int,
         hidden_count: int = 1,
-        activation: Callable = torch.nn.ReLU,
+        activation: Callable = torch.nn.ReLU(),
         initializer: Callable = torch.nn.init.ones_,
     ) -> None:
         """
@@ -43,11 +43,11 @@ class MLP(torch.nn.Module):
 
         # Define number of neurons in each layer while maintaining the API
         self.n_neurons = [input_size] + [
-            hidden_size // 2**i for i in range(hidden_count)
+            hidden_size // 2**i for i in range(self.hidden_count)
         ]
 
         # Order for layers: Linear -> BatchNorm -> Activation -> Dropout
-        for i in range(len(self.n_neurons)):
+        for i in range(self.hidden_count):
             # Define Feedforward neural network and init weights and bias
             self.layers += [nn.Linear(self.n_neurons[i], self.n_neurons[i + 1])]
             self.initializer(self.layers[-1].weight)
