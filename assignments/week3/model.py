@@ -35,14 +35,14 @@ class MLP(torch.nn.Module):
         self.initializer = initializer
 
         # Define dropout and batchnorm layer
-        self.dropout = nn.Dropout(0.15)
+        self.dropout = nn.Dropout(0.2)
 
         # Define feedforward neural network
         self.layers = nn.ModuleList()
 
         # Define number of neurons in each layer while maintaining the API
         self.n_neurons = [input_size] + [
-            hidden_size // 2**i for i in range(self.hidden_count)
+            hidden_size // 3**i for i in range(self.hidden_count)
         ]
 
         # Order for layers: Linear -> BatchNorm -> Activation -> Dropout
