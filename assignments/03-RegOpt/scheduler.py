@@ -7,7 +7,7 @@ from torch.optim.lr_scheduler import _LRScheduler
 class CustomLRScheduler(_LRScheduler):
     """Custom learning rate scheduler"""
 
-    def __init__(self, optimizer, last_epoch=-1, gamma=1, c=1):
+    def __init__(self, optimizer, last_epoch=-1, gamma=1, step_size=3, c=11):
         """
         Create a new scheduler.
 
@@ -29,6 +29,7 @@ class CustomLRScheduler(_LRScheduler):
         self.gamma = gamma
         self.optimizer = optimizer
         self.last_epoch = last_epoch
+        self.step_size = step_size
         self.c = c
 
     def get_lr(self) -> List[float]:
@@ -40,10 +41,18 @@ class CustomLRScheduler(_LRScheduler):
         # Note to students: You CANNOT change the arguments or return type of
         # this function (because it is called internally by Torch)
 
+        # if self.last_epoch == 0:
+        #     return [group["lr"] for group in self.optimizer.param_groups]
+
+        # return [
+        #     group["lr"] * np.exp(-self.gamma**self.c)
+        #     for group in self.optimizer.param_groups
+        # ]
+
         if self.last_epoch == 0:
-            return [group["lr"] for group in self.optimizer.param_groups]
+            return [lr for lr in self.base_lrs]
 
         return [
-            group["lr"] * np.exp(-self.gamma**self.c)
-            for group in self.optimizer.param_groups
+            lr * np.exp(self.gamma * self.c**enum)
+            for enum, lr in enumerate(self.base_lrs)
         ]
