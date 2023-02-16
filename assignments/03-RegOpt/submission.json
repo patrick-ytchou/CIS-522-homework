@@ -2,11 +2,11 @@
     "assignment_name": "RegOpt",
     "contributors": [
         {
-            "name": "Change this to your name",
-            "pennkey": "MyPennKey"
+            "name": "Yung-Tang Chou",
+            "pennkey": "ytchou"
         }
     ],
     "sources": [
-        "Don't forget to list your sources/attribution here!"
+        "https://pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.ExponentialLR.html",
     ]
 }
