@@ -17,8 +17,8 @@ class CONFIG:
         # You can pass arguments to the learning rate scheduler
         # constructor here.
         "last_epoch": -1,
-        "gamma": 0.81,
-        "c": 1.3,
+        "gamma": 0.98,
+        "c": 1,
     }
 
     optimizer_factory: Callable[
@@ -29,9 +29,4 @@ class CONFIG:
         weight_decay=CONFIG.initial_weight_decay,
     )
 
-    transforms = Compose(
-        [
-            ToTensor(),
-            Normalize()
-        ]
-    )
+    transforms = Compose([ToTensor(), Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
