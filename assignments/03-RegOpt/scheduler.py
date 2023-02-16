@@ -1,6 +1,6 @@
 from typing import List
 
-import torch
+import numpy as np
 from torch.optim.lr_scheduler import _LRScheduler
 
 
@@ -16,7 +16,7 @@ class CustomLRScheduler(_LRScheduler):
                 Optimizer object
 
             last_epoch: (int)
-                The index of last epoch. Default: -1
+                The index of last epoch
 
             gamma : (float)
                 The gamma parameter for the exponential distribution
@@ -44,6 +44,6 @@ class CustomLRScheduler(_LRScheduler):
             return [group["lr"] for group in self.optimizer.param_groups]
 
         return [
-            group["lr"] * torch.exp(self.gamma**self.c)
+            group["lr"] * np.exp(self.gamma**self.c)
             for group in self.optimizer.param_groups
         ]
