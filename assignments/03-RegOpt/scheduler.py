@@ -1,5 +1,6 @@
 from typing import List
 
+import torch
 from torch.optim.lr_scheduler import _LRScheduler
 
 
@@ -12,22 +13,16 @@ class CustomLRScheduler(_LRScheduler):
 
         Arguments:
             optimizer: (torch.optim.Optimizer)
+                Optimizer object
 
             last_epoch: (int)
+                The index of last epoch. Default: -1
 
             gamma : (float)
+                The gamma parameter for the exponential distribution
 
             c : (float)
-
-
-        Returns:
-            None
-
-
-        Note to students: You can change the arguments to this constructor,
-        if you need to add new parameters.
-
-        TODO: Weibull
+                The c parameter for the weibull distribution used on gamma
         """
         # ... Your Code Here ...
         super(CustomLRScheduler, self).__init__(optimizer, last_epoch)
@@ -37,20 +32,18 @@ class CustomLRScheduler(_LRScheduler):
         self.c = c
 
     def get_lr(self) -> List[float]:
-        """_summary_
+        """Function to get learning rate
 
         Returns:
-            List[float]: _description_
+            List[float]: list of learning rates by the definition of the scheduler
         """
         # Note to students: You CANNOT change the arguments or return type of
         # this function (because it is called internally by Torch)
-
-        # ... Your Code Here ...
-        # Here's our dumb baseline implementation:
 
         if self.last_epoch == 0:
             return [group["lr"] for group in self.optimizer.param_groups]
 
         return [
-            group["lr"] * self.gamma**self.c for group in self.optimizer.param_groups
+            group["lr"] * torch.exp(self.gamma**self.c)
+            for group in self.optimizer.param_groups
         ]
