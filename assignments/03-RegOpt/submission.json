@@ -10,6 +10,7 @@
         "https://pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.ExponentialLR.html",
         "https://en.wikipedia.org/wiki/Weibull_distribution",
         "https://pytorch.org/docs/stable/generated/torch.optim.Adam.html",
+        "https://towardsdatascience.com/a-visual-guide-to-learning-rate-schedulers-in-pytorch-24bbb262c863",
         "https://towardsdatascience.com/learning-rate-schedules-and-adaptive-learning-rate-methods-for-deep-learning-2c8f433990d1"
     ]
 }
