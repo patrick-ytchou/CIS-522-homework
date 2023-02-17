@@ -19,7 +19,7 @@ class CONFIG:
         "last_epoch": -1,
         "gamma": 0.05,
         "c": 0.5,
-        "step_size": 2,
+        "step_size": 1,
     }
 
     optimizer_factory: Callable[
