@@ -18,8 +18,8 @@ class CONFIG:
         # constructor here.
         "last_epoch": -1,
         "gamma": 0.01,
-        "c": 0.7,
-        "step_size": 1,
+        "c": 0.5,
+        "step_size": 2,
     }
 
     optimizer_factory: Callable[
