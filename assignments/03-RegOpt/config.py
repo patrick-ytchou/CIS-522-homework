@@ -17,8 +17,8 @@ class CONFIG:
         # You can pass arguments to the learning rate scheduler
         # constructor here.
         "last_epoch": -1,
-        "gamma": 0.05,
-        "c": 0.5,
+        "gamma": 0.2,
+        "c": 0.9,
         "step_size": 1,
     }
 
