@@ -9,17 +9,17 @@ class CONFIG:
     """Config file for the scheduler"""
 
     batch_size = 64
-    num_epochs = 10
-    initial_learning_rate = 0.00125
-    initial_weight_decay = 0.0001
+    num_epochs = 8
+    initial_learning_rate = 0.001
+    initial_weight_decay = 0.001
 
     lrs_kwargs = {
         # You can pass arguments to the learning rate scheduler
         # constructor here.
         "last_epoch": -1,
-        "gamma": 0.01,
-        "c": 0.5,
-        "step_size": 2,
+        "gamma": 0.015,
+        "c": 0.71,
+        "step_size": 1,
     }
 
     optimizer_factory: Callable[
