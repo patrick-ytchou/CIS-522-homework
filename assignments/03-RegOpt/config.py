@@ -2,7 +2,7 @@ from typing import Callable
 import torch
 import torch.optim
 import torch.nn as nn
-from torchvision.transforms import Compose, Normalize, ToTensor, Grayscale
+from torchvision.transforms import Compose, Normalize, ToTensor
 
 
 class CONFIG:
@@ -34,6 +34,5 @@ class CONFIG:
         [
             ToTensor(),
             Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
-            Grayscale(num_output_channels=3),
         ]
     )
