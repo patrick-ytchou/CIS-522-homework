@@ -5,6 +5,7 @@ import torch.nn as nn
 from torchvision.transforms import Compose, Normalize, ToTensor
 import numpy as np
 
+
 class CONFIG:
     """Config file for the scheduler"""
 
