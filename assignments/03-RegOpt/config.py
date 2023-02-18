@@ -11,7 +11,7 @@ class CONFIG:
 
     batch_size = 64
     num_epochs = 6
-    initial_learning_rate = 0.001
+    initial_learning_rate = 0.00125
     initial_weight_decay = 0
 
     lrs_kwargs = {
@@ -20,7 +20,7 @@ class CONFIG:
         "last_epoch": -1,
         "gamma": 0.01,
         "c": 0.5,
-        "step_size": 2,
+        "step_size": 1,
     }
 
     optimizer_factory: Callable[
