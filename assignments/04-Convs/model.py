@@ -6,6 +6,7 @@ class Model(nn.Module):
     """
     A simple CNN with 2 convolutional layers and 2 fully-connected layers
     """
+
     def __init__(self, num_channels: int, num_classes: int) -> None:
         super(Model, self).__init__()
         self.conv1 = nn.Conv2d(3, 6, kernel_size=3, stride=1, padding=1)
