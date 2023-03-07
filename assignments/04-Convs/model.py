@@ -9,7 +9,7 @@ class Model(nn.Module):
 
     def __init__(self, num_channels: int, num_classes: int) -> None:
         super(Model, self).__init__()
-        self.conv1 = nn.Conv2d(num_channels, 5, kernel_size=5, stride=1, padding=2)
+        self.conv1 = nn.Conv2d(num_channels, 5, kernel_size=3, stride=1, padding=1)
         self.conv2 = nn.Conv2d(5, 7, kernel_size=3, stride=1, padding=1)
 
         self.bn1 = nn.BatchNorm2d(5)
