@@ -9,18 +9,17 @@ class Model(nn.Module):
 
     def __init__(self, num_channels: int, num_classes: int) -> None:
         super(Model, self).__init__()
-        self.conv1 = nn.Conv2d(3, 6, kernel_size=3, stride=1, padding=1)
+        self.conv1 = nn.Conv2d(num_channels, 6, kernel_size=3, stride=1, padding=1)
         self.conv2 = nn.Conv2d(6, 12, kernel_size=3, stride=1, padding=1)
-        # self.conv3 = nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1)
 
         self.bn1 = nn.BatchNorm2d(6)
         self.bn2 = nn.BatchNorm2d(12)
-        # self.bn3 = nn.BatchNorm2d(64)
 
         self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
 
-        self.fc1 = nn.Linear(12 * 8 * 8, 256)
-        self.fc2 = nn.Linear(256, 10)
+        # self.fc1 = nn.Linear(12 * 8 * 8, 256)
+        # self.fc2 = nn.Linear(256, num_classes)
+        self.fc1 = nn.Linear(12 * 8 * 8, num_classes)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """Define training sequence for the CNN.
@@ -40,17 +39,9 @@ class Model(nn.Module):
         x = self.bn2(x)
         x = nn.functional.relu(x)
         x = self.pool(x)
-        # print(x.shape)
-
-        # x = self.conv3(x)
-        # x = self.bn3(x)
-        # x = nn.functional.relu(x)
-        # x = self.pool(x)
 
         x = x.view(-1, 12 * 8 * 8)
 
         x = self.fc1(x)
-        x = nn.functional.relu(x)
-        x = self.fc2(x)
 
         return x
