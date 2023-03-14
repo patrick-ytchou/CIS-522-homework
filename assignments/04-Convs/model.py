@@ -59,7 +59,6 @@ class Model(nn.Module):
         x = self.bn1(x)
         x = F.relu(x)
         x = self.pool(x)
-        # print(x.shape)
 
         # x = self.conv2(x)
         # x = self.bn2(x)
