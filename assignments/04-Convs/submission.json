@@ -8,6 +8,7 @@
     ],
     "sources": [
         "https://stats.stackexchange.com/questions/376993/why-does-dropout-increase-the-training-time-per-epoch-in-a-neural-network",
-        "https://stackoverflow.com/questions/44782505/batch-normalization-makes-training-faster"
+        "https://stackoverflow.com/questions/44782505/batch-normalization-makes-training-faster",
+        "https://stats.stackexchange.com/questions/322822/how-normalizing-helps-to-increase-the-speed-of-the-learning",
     ]
 }

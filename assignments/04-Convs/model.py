@@ -21,6 +21,10 @@ class Model(nn.Module):
         # self.fc2 = nn.Linear(256, num_classes)
         self.fc1 = nn.Linear(7 * 8 * 8, num_classes)
 
+        nn.init.xavier_uniform_(self.conv1.weight)
+        nn.init.xavier_uniform_(self.conv2.weight)
+        nn.init.xavier_uniform_(self.fc1.weight)
+
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """Define training sequence for the CNN.
 
