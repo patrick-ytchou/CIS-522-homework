@@ -36,8 +36,8 @@ class Model(nn.Module):
 
         self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
 
-        self.fc1 = nn.Linear(self.out_channels1 * 8 * 8, 256)
-        self.fc2 = nn.Linear(256, num_classes)
+        self.fc1 = nn.Linear(self.out_channels1 * 8 * 8, 16)
+        self.fc2 = nn.Linear(16, num_classes)
 
         # self.fc1 = nn.Linear(self.out_channels2 * 8 * 8, num_classes)
 
