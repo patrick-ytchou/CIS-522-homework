@@ -10,8 +10,8 @@ class Model(nn.Module):
 
     def __init__(self, num_channels: int, num_classes: int) -> None:
         super(Model, self).__init__()
-        self.out_channels1 = 7
-        self.out_channels2 = 5
+        self.out_channels1 = 6
+        self.out_channels2 = 8
 
         self.conv1 = nn.Conv2d(
             num_channels,
