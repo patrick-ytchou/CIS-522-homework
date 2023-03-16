@@ -34,13 +34,15 @@ class Model(nn.Module):
         self.bn1 = nn.BatchNorm2d(self.out_channels1)
         self.bn2 = nn.BatchNorm2d(self.out_channels2)
         self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
-        self.fc1 = nn.Linear(self.out_channels2 * 8 * 8, 64)
-        self.fc2 = nn.Linear(64, num_classes)
+        # self.fc1 = nn.Linear(self.out_channels2 * 8 * 8, 64)
+        # self.fc2 = nn.Linear(64, num_classes)
+
+        self.fc1 = nn.Linear(self.out_channels2 * 8 * 8, num_classes)
 
         nn.init.xavier_uniform_(self.conv1.weight)
         nn.init.xavier_uniform_(self.conv2.weight)
         nn.init.xavier_uniform_(self.fc1.weight)
-        nn.init.xavier_uniform_(self.fc2.weight)
+        # nn.init.xavier_uniform_(self.fc2.weight)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """Define training sequence for the CNN.
@@ -63,7 +65,8 @@ class Model(nn.Module):
 
         x = x.view(-1, self.out_channels2 * 8 * 8)
 
-        x = F.relu(self.fc1(x))
-        x = self.fc2(x)
+        x = self.fc1(x)
+        # x = F.relu(self.fc1(x))
+        # x = self.fc2(x)
 
         return x
