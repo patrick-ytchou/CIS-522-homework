@@ -10,8 +10,9 @@ class Model(nn.Module):
 
     def __init__(self, num_channels: int, num_classes: int) -> None:
         super(Model, self).__init__()
-        self.out_channels1 = 16
-        self.out_channels2 = 32
+        self.out_channels1 = 12
+        self.out_channels2 = 24
+        # self.fc_hidden = 16
 
         self.conv1 = nn.Conv2d(
             num_channels,
@@ -34,8 +35,8 @@ class Model(nn.Module):
         self.bn1 = nn.BatchNorm2d(self.out_channels1)
         self.bn2 = nn.BatchNorm2d(self.out_channels2)
         self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
-        # self.fc1 = nn.Linear(self.out_channels2 * 8 * 8, 64)
-        # self.fc2 = nn.Linear(64, num_classes)
+        # self.fc1 = nn.Linear(self.out_channels2 * 8 * 8, self.fc_hidden)
+        # self.fc2 = nn.Linear(self.fc_hidden, num_classes)
 
         self.fc1 = nn.Linear(self.out_channels2 * 8 * 8, num_classes)
 
