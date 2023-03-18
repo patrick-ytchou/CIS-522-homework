@@ -10,14 +10,14 @@ class Model(nn.Module):
 
     def __init__(self, num_channels: int, num_classes: int) -> None:
         super(Model, self).__init__()
-        self.out_channels1 = 36
+        self.out_channels1 = 18
         # self.out_channels2 = 20
         # self.fc_hidden = 64
 
         self.conv1 = nn.Conv2d(
             num_channels,
             self.out_channels1,
-            kernel_size=3,
+            kernel_size=4,
             stride=2,
             padding=2,
             bias=False,
